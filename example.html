@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="testApp">
+    <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">        
+<link href="animate.css" type="text/css" rel="stylesheet">
+    </head>
+    <body ng-controller="testCtrl" style="padding-top:50px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <form>
+                    <div class="row">
+                        <div class="col-md-5">
+        <input type="text" name="username" id="username" ng-model="username" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="col-md-1">
+        <button ng-click="addMember()" ng-disabled="username==null || username.length<2" class="btn btn-default">Add</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>    </div>
+                <div class="col-md-8">
+        <div id="list" class="row" ng-if="list.length>=1" ng-hide="list.length<1" ng-cloak>
+        <hr>
+        <table class="table table-hover table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th><input name="search" type="text" ng-model="search" class="form-control" placeholder="Name"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="member in list | filter: search" class="slideInRight animated">
+                <td class="col-md-1">{{$index}}</td>
+                <td>{{member.name}}</td>
+                <td class="col-md-1"><button ng-click="removeMember($index)" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr>
+            <p>Count:{{list.length}}</p>
+        </div>
+        </div>
+            </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script>            
+            angular.module('testApp', [])
+            .controller('testCtrl', function($scope, $timeout, $location, $http ) {
+                $scope.list = [];
+                $scope.addMember = function(){                    
+                    $scope.list.push({name:$scope.username});                                        
+                    $scope.username = null;
+                }
+                $scope.removeMember = function(index){
+                    $scope.list.splice(index, 1);  
+                }                
+            });
+
+            </script>
+        </body>
+</html>
